@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Password Generator</title>
+    <style>
+        body {
+            width: 100%;
+            padding-left: 33.33%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Password Generator</h1>
+    <p>Please enter the password length you would like:</p>
+    <form>
+        <input type="text" id="pwdLengthDtrm">
+        <input type="submit" id="SubBttn">
+    </form>
+    <p id="pwd"></p>
+    <script>
+        const alpha = ["b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "p", "q", "s", "t", "u", "v", "w", "x", "y", "z"];
+        const nume = [1, 2, 3, 4, 5, 6, 7];
+        const speci = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "[", "]", "{", "}", "å", "|"];
+        let submmit = document.getElementById("SubBttn")
+        function genpassword(e) {
+            let password = [];
+            let result = "";
+            for (let i = 0; i < e; i++) {
+                let dieRoll = Math.floor((Math.random() * 6) + 1);
+                let selectedCharacter = dieRoll;
+                if (selectedCharacter === 1 || selectedCharacter === 5) {
+                    let alphaRandom = Math.floor(Math.random() * 23);
+                    password.push(alpha[alphaRandom]);
+                } else if (selectedCharacter === 2 || selectedCharacter === 6) {
+                    let numeRandom = Math.floor(Math.random() * 7);
+                    password.push(nume[numeRandom]);
+                } else {
+                    let speciRandom = Math.floor(Math.random() * 16);
+                    password.push(speci[speciRandom]);
+                }
+            }
+            password = password.join();
+            result = password.replace(/,/g, "");
+            return result;
+        }
+        submmit.addEventListener("click", function (event) {
+            let length = document.getElementById("pwdLengthDtrm").value
+
+            event.preventDefault();
+            if (isNaN(parseInt(length))) {
+                alert("Error: Value is not a Number!");
+            } else {
+                document.getElementById("pwd").innerHTML = (genpassword(length));
+            }
+        });
+
+    </script>
+</body>
+
+</html>
